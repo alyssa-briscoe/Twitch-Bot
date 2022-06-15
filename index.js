@@ -36,29 +36,43 @@ client.on("message", (channel, tags, message, self) => {
   const arg = message.slice(1).split(" ");
   const command = arg.shift().toLowerCase();
 
-  if (command === "echo") {
-    client.say(channel, `@${tags.username}, you said: "${arg.join(" ")}"`);
-  } else if (command === "hello") {
-    client.say(
-      channel,
-      `@${tags.username}, Welcome to the channel. Trytime is currently on a delay!`
-    );
-  } else if (command === "dice") {
-    const result = Math.floor(Math.random() * 6) + 1;
-    client.say(channel, `@${tags.username}, You rolled a ${result}.`);
-  } else if (command === "timeout") {
-    client.timeout(channel, arg[0], arg[1], arg[2]);
-  } else if (command === "ban") {
-    client.ban(channel, arg[0], arg[1]);
-  } else if (command === "unban") {
-    client.unban(channel, arg[0]);
-  } else if (command === "vips") {
-    client.vips(channel);
-  } else if (command === "subcheck") {
-	var value = true;
-	if(tags['subscriber'] === value){
-	client.say(channel, `You are a subscriber! Thank You!`);
-} else client.say(channel, `You are NOT a sub.`);
+  switch (command) {
+    case "echo":
+      client.say(channel, `@${tags.username}, you said: "${arg.join(" ")}"`);
+      break;
+    case "hello":
+      client.say(
+        channel,
+        `@${tags.username}, Welcome to the channel. Trytime is currently on a delay!`
+      );
+      break;
+    case "dice":
+      const result = Math.floor(Math.random() * 6) + 1;
+      client.say(channel, `@${tags.username}, You rolled a ${result}.`);
+      break;
+    case "timeout":
+      client.timeout(channel, arg[0], arg[1], arg[2]);
+      break;
+    case "ban":
+      client.ban(channel, arg[0], arg[1]);
+      break;
+    case "unban":
+      client.unban(channel, arg[0]);
+      break;
+    case "vips":
+      client.vips(channel);
+      break;
+    case "subcheck":
+      var value = true;
+      if (tags["subscriber"] === value) {
+        client.say(channel, `You are a subscriber! Thank You!`);
+      } else {
+        client.say(channel, `You are NOT a sub.`);
+      }
+      break;
+    default:
+      client.say(channel, "Unknown command");
+      break;
   }
 });
 
