@@ -1,12 +1,5 @@
 const tmi = require("tmi.js");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-const JokeAPI = require('sv443-joke-api');
-
-
-//async function apiCall(){
-//var response = await fetch('https://v2.jokeapi.dev/joke/Any');
-//var results = await response.json();
-//console.log(results);} 
 
 
 const client = new tmi.Client({
@@ -72,7 +65,9 @@ client.on("message", (channel, tags, message, self) => {
 
 client.on("message", (channel, tags, message, self) => {
   if(tags["custom-reward-id"] === "078bd6e0-6339-49e2-8306-406225e0122d"){
-  JokeAPI.getJokes()
+  //JokeAPI.getJokes()
+
+  fetch('https://v2.jokeapi.dev/joke/Miscellaneous,Dark,Pun,Spooky?blacklistFlags=nsfw,racist,sexist,explicit')
   .then((res) => res.json())
   .then((data) => {
     if(data.hasOwnProperty('joke')){
@@ -82,3 +77,23 @@ client.on("message", (channel, tags, message, self) => {
     } else void 0;
   }
 )}});
+
+
+// cant make this 8ball API respond yet
+
+//client.on("message", (channel, tags, message, self) => {
+
+  //const arg = message.slice(1).split(" ");
+  //const command = arg.shift().toLowerCase();
+
+  //if(command === "question"){
+
+  //fetch('https://8ball.delegator.com/magic/JSON/random')
+  //.then(res => res.text())
+  //.then((text) => {
+   // const obj = JSON.parse(text);
+   // client.say(channel, obj["answer"]);
+   // }).catch(err => {
+   //   console.error(err);
+ // })}
+// });
